@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "evar-admit"
+version = "0.1.0"
+description = "Evidence-Validated Hypothesis Admission (EVAR) — independent reference implementation"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Sheshi Sheri" }]
+dependencies = [
+    "pydantic==2.13.5",
+    "python-dotenv==1.2.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.4.2",
+    "openai==1.99.9",
+]
+openai = [
+    "openai==1.99.9",
+]
+
+[project.urls]
+Paper = "https://arxiv.org/abs/2608.29835"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"
