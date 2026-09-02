@@ -1,0 +1,83 @@
+════════════════════════════════════════════════════════════════════════
+  EVAR  ·  Evidence-Validated Hypothesis Admission
+  The Harbor Watch  ·  deterministic reasoner  ·  locked store
+════════════════════════════════════════════════════════════════════════
+
+[1] Compiled evidence store
+    claims : 28   (immutable after lock)
+    words  : 308   (original narrative)
+    uncertain / rumor / conflict units : 9
+
+    sample claims with source excerpts:
+    c001  asserted   OK          rumor=false
+         The Harbor Watch
+    c002  asserted   OK          rumor=false
+         On Wednesday morning the customs office on Pier 4 discovered that the harbor ledger w...
+    c003  asserted   OK          rumor=false
+         The bound book, which recorded every inbound crate from Tuesday's tide, had been stol...
+    c004  asserted   OK          rumor=false
+         Mara Cole clocked out at 9:10pm.
+    c005  asserted   OK          rumor=false
+         Two passengers later told the harbor master they saw Mara Cole on the south ferry at ...
+    c006  negated    Conflict    rumor=false
+         Mara Cole did not return to the pier that night.
+
+[2] Instance-specific budget
+    uncertain / conflict / rumor units : 9
+    max_rounds = clamp(1 + n_unresolved_gaps, 1, 6) = 3
+    max_hypotheses (incl. uncertainty headroom) = 10
+    max_hypotheses_per_round = 3
+    each proposed hypothesis costs 1; stop on sufficiency or remaining=0
+
+[3] Refinement rounds
+────────────────────────────────────────────────────────────────────────
+    round 1   remaining rounds=2  remaining hyps=7
+    unresolved after round: (none)
+
+    hyp h-slicker
+         A figure in a yellow slicker entered the customs office at 10:22pm and took the harbor ledger.
+         challenge.support   yellow slicker, customs office, harbor ledger, enter, take
+         challenge.contra    opposite polarity on overlapping entities
+         verdict ADMITTED   support=0.80   contradicted=False
+         support ids : c022, c023, c002, c003, c011, c027
+
+    hyp h-rumor
+         Mara Cole sold ledgers before.
+         challenge.support   Mara Cole, sell, ledger
+         challenge.contra    negated claim about mara cole, opposite polarity on overlapping entities
+         verdict QUARANTINED   support=0.33   contradicted=False
+         support ids : c004, c005, c006, c007
+
+    hyp h-key
+         Jonas Pike used the spare office key to steal the harbor ledger from customs office.
+         challenge.support   Jonas Pike, spare key, customs office, use, steal
+         challenge.contra    negated claim about jonas pike, exclusive location for jonas pike other than customs, customs office, harbor, office, the harbor, opposite polarity on overlapping entities
+         verdict DISCARDED   support=0.80   contradicted=True
+         support ids : c008, c009, c010, c011, c018, c020, c002, c003, c022
+         contra  ids : c009, c010, c011, c018
+    admitted=1 quarantined=1 discarded=1
+
+[4] Final answer-supporting state
+────────────────────────────────────────────────────────────────────────
+    ADMITTED (1)
+         • A figure in a yellow slicker entered the customs office at 10:22pm and took the harbor ledger.
+
+    QUARANTINED (1)
+         • Mara Cole sold ledgers before.
+
+    DISCARDED (1)
+         • Jonas Pike used the spare office key to steal the harbor ledger from customs office.
+
+    stop=sufficiency  covered=['culprit', 'object']  unresolved=[]
+
+[5] Grounded answer (admitted hypotheses only)
+────────────────────────────────────────────────────────────────────────
+    Q: Who stole the harbor ledger, and what evidence actually supports that?
+
+    Grounded only in admitted hypotheses (quarantined rumor and discarded
+    contradictions are excluded): A figure in a yellow slicker entered the
+    customs office at 10:22pm and took the harbor ledger.
+
+════════════════════════════════════════════════════════════════════════
+  EVAR reference  ·  Liu, Ji, Ping  ·  arXiv:2608.29835  ·  EMNLP 2026
+════════════════════════════════════════════════════════════════════════
